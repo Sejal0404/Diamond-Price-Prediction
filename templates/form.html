@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diamond Price Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --error: #d32f2f;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        h1 {
+            color: var(--secondary);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .error-message {
+            color: white;
+            background-color: var(--error);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Diamond Price Prediction</h1>
+    
+    {% if error %}
+    <div class="error-message">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="/predict">
+        <div class="form-container">
+            <div class="form-group">
+                <label for="carat">Carat:</label>
+                <input type="number" step="0.01" id="carat" name="carat" placeholder="e.g., 1.5" required>
+            </div>
+
+            <div class="form-group">
+                <label for="depth">Depth (%):</label>
+                <input type="number" step="0.1" id="depth" name="depth" placeholder="e.g., 60.5" required>
+            </div>
+
+            <div class="form-group">  
+                <label for="table">Table (%):</label>
+                <input type="number" step="0.1" id="table" name="table" placeholder="e.g., 55.0" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="x">Length (mm):</label>
+                <input type="number" step="0.1" id="x" name="x" placeholder="e.g., 5.1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="y">Width (mm):</label>
+                <input type="number" step="0.1" id="y" name="y" placeholder="e.g., 5.2" required>
+            </div>
+
+            <div class="form-group">
+                <label for="z">Depth (mm):</label>
+                <input type="number" step="0.1" id="z" name="z" placeholder="e.g., 3.1" required>
+            </div>         
+
+            <div class="form-group">
+                <label for="cut">Cut Quality:</label>
+                <select id="cut" name="cut" required>
+                    <option value="">Select cut</option>
+                    <option value="Fair">Fair</option>
+                    <option value="Good">Good</option>
+                    <option value="Very Good">Very Good</option>
+                    <option value="Premium">Premium</option>
+                    <option value="Ideal">Ideal</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="color">Color Grade:</label>
+                <select id="color" name="color" required>
+                    <option value="">Select color</option>
+                    <option value="D">D (Colorless)</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="G">G</option>
+                    <option value="H">H</option>
+                    <option value="I">I</option>
+                    <option value="J">J (Near Colorless)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="clarity">Clarity Grade:</label>
+                <select id="clarity" name="clarity" required>
+                    <option value="">Select clarity</option>
+                    <option value="I1">I1 (Included)</option>
+                    <option value="SI2">SI2</option>
+                    <option value="SI1">SI1</option>
+                    <option value="VS2">VS2</option>
+                    <option value="VS1">VS1</option>
+                    <option value="VVS2">VVS2</option>
+                    <option value="VVS1">VVS1</option>
+                    <option value="IF">IF (Internally Flawless)</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="grid-column: span 2;">
+                <button type="submit">Calculate Diamond Price</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

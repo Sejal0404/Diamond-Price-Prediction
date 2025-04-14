@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction Result</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .price {
+            font-size: 2em;
+            color: #4CAF50;
+            margin: 10px 0;
+        }
+        .details {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prediction Result</h1>
+    <div class="result-box">
+        <div class="price">${{ final_result }}</div>
+        <div class="details">
+            <p><strong>Carat:</strong> {{ carat }}</p>
+            <p><strong>Color:</strong> {{ color }}</p>
+            <p><strong>Clarity:</strong> {{ clarity }}</p>
+        </div>
+    </div>
+    <a href="/form" class="btn">Predict Another Diamond</a>
+</body>
+</html>
